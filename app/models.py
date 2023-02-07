@@ -7,4 +7,4 @@ class Memo(models.Model):
 
     class Meta:
         table = "memos"
-        ordering = ["-id"]
+        ordering = ["id"]

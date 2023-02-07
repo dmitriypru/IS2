@@ -1,10 +1,13 @@
 version: "3.9"
 
-
 networks:
   infosec-network:
     name: infosec-network
+    driver: bridge
 
+volumes:
+  infosec-postgres-volume:
+    name: infosec-postgres-volume
 
 services:
   infosec-api:
@@ -29,14 +32,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       POSTGRES_DB: ${POSTGRES_DB:-postgres}
-    healthcheck:
-      test: pg_isready --username=${POSTGRES_USER} --dbname=${POSTGRES_DB}
-      interval: 10s
-      timeout: 5s
-      retries: 10
-    ports:
-      - "${POSTGRES_EXPOSED_PORT:-5432}:5432"
     volumes:
-      - ./volumes/postgres:/var/lib/postgresql/data
+      - infosec-postgres-volume:/var/lib/postgresql/data
     networks:
       - infosec-network

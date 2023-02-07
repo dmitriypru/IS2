@@ -8,4 +8,4 @@ until curl http://$POSTGRES_HOST:$POSTGRES_PORT/ 2>&1 | grep '52' && echo "# ===
 done
 
 echo "# ======================= [2/2] Starting Server"
-exec gunicorn -k "uvicorn.workers.UvicornWorker" "app.main:app"
+exec gunicorn -k uvicorn.workers.UvicornWorker -w 4 -b 0.0.0.0:8000 "app.main:app"
